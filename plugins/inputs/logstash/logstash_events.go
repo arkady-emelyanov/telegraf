@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-func publishEventStat(api apiClient, res apiResponse, wg *sync.WaitGroup) {
+func publishEventsStat(api apiClient, res apiResponse, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	fmt.Println(res)

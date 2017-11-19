@@ -8,7 +8,6 @@ import (
 	"net/url"
 	"net/http"
 	"time"
-	"encoding/json"
 	"sync"
 	"strings"
 )
@@ -73,10 +72,10 @@ func (l *logstash) Gather(acc telegraf.Accumulator) error {
 		workers.Add(4)
 
 		go withAPICall(c, endpointChan, nil, func(api apiClient, res apiResponse) {
-			go publishEventStat(api, res, &workers)
+			go publishEventsStat(api, res, &workers)
 			go publishJVMStat(api, res, &workers)
 			go publishProcessStat(api, res, &workers)
-			go publishPipelineStat(api, res, &workers)
+			go publishPipelinesStat(api, res, &workers)
 		})
 
 		collectTypes := strings.Join(l.Types, ",")
@@ -160,52 +159,6 @@ func (l *logstash) getClient(acc telegraf.Accumulator, addr string, errorChan ch
 	}
 
 	return c, nil
-}
-
-// construct endpoint request
-func (api *apiClient) getRequest(uri string) (*http.Request, error) {
-	// create new request
-	endpoint := fmt.Sprintf("%s%s", api.baseURL, uri)
-	req, err := http.NewRequest("GET", endpoint, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	// add support for http basic authorization
-	if api.requestUser != "" {
-		req.SetBasicAuth(api.requestUser, api.requestPass)
-	}
-
-	return req, nil
-}
-
-// perform synchronous http request
-func (api *apiClient) call(uri string) (apiResponse, error) {
-	var r apiResponse
-
-	// get request
-	req, err := api.getRequest(uri)
-	if err != nil {
-		return r, err
-	}
-
-	// do request
-	res, err := api.client.Do(req)
-	if err != nil {
-		return r, err
-	}
-
-	// decode response
-	defer res.Body.Close()
-	if res.StatusCode != http.StatusOK {
-		return r, fmt.Errorf("endpoint: '%s', invalid response code: '%d'", uri, res.StatusCode)
-	}
-
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
-		return r, err
-	}
-
-	return r, err
 }
 
 // worker spawn helper function
