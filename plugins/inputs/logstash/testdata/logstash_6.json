@@ -1,0 +1,126 @@
+{
+  "host": "00e3614d1761",
+  "version": "6.0.0",
+  "http_address": "0.0.0.0:9600",
+  "id": "ed2705f6-5d0d-413d-b274-6fbf0c3bcfee",
+  "name": "00e3614d1761",
+  "jvm": {
+    "threads": {
+      "count": 26,
+      "peak_count": 28
+    },
+    "mem": {
+      "heap_used_percent": 13,
+      "heap_committed_in_bytes": 1038876672,
+      "heap_max_in_bytes": 1038876672,
+      "heap_used_in_bytes": 141707576,
+      "non_heap_used_in_bytes": 117145016,
+      "non_heap_committed_in_bytes": 125882368,
+      "pools": {
+        "survivor": {
+          "peak_used_in_bytes": 34865152,
+          "used_in_bytes": 34865144,
+          "peak_max_in_bytes": 34865152,
+          "max_in_bytes": 34865152,
+          "committed_in_bytes": 34865152
+        },
+        "old": {
+          "peak_used_in_bytes": 118046344,
+          "used_in_bytes": 66495320,
+          "peak_max_in_bytes": 724828160,
+          "max_in_bytes": 724828160,
+          "committed_in_bytes": 724828160
+        },
+        "young": {
+          "peak_used_in_bytes": 279183360,
+          "used_in_bytes": 40347112,
+          "peak_max_in_bytes": 279183360,
+          "max_in_bytes": 279183360,
+          "committed_in_bytes": 279183360
+        }
+      }
+    },
+    "gc": {
+      "collectors": {
+        "old": {
+          "collection_time_in_millis": 137,
+          "collection_count": 2
+        },
+        "young": {
+          "collection_time_in_millis": 461,
+          "collection_count": 6
+        }
+      }
+    },
+    "uptime_in_millis": 204093
+  },
+  "process": {
+    "open_file_descriptors": 114,
+    "peak_open_file_descriptors": 115,
+    "max_file_descriptors": 1048576,
+    "mem": {
+      "total_virtual_in_bytes": 4840247296
+    },
+    "cpu": {
+      "total_in_millis": 52290,
+      "percent": 0,
+      "load_average": {
+        "1m": 0.04,
+        "5m": 0.15,
+        "15m": 0.12
+      }
+    }
+  },
+  "events": {
+    "in": 0,
+    "filtered": 0,
+    "out": 0,
+    "duration_in_millis": 0,
+    "queue_push_duration_in_millis": 0
+  },
+  "pipelines": {
+    "main": {
+      "events": {
+        "duration_in_millis": 0,
+        "in": 0,
+        "out": 0,
+        "filtered": 0,
+        "queue_push_duration_in_millis": 0
+      },
+      "plugins": {
+        "inputs": [
+          {
+            "id": "0aa3178b2218d192987d7a6947896385b15ba30da84d121a9dc3e5b24bbbd2a8",
+            "events": {
+              "out": 0,
+              "queue_push_duration_in_millis": 0
+            },
+            "name": "beats"
+          }
+        ],
+        "filters": [],
+        "outputs": [
+          {
+            "id": "7ebc97dbe516630cf7832f25a39865b0a49aaa09196f0ce8249ba1360acf7df1",
+            "events": {
+              "duration_in_millis": 0,
+              "in": 0,
+              "out": 0
+            },
+            "name": "stdout"
+          }
+        ]
+      },
+      "reloads": {
+        "last_error": null,
+        "successes": 0,
+        "last_success_timestamp": null,
+        "last_failure_timestamp": null,
+        "failures": 0
+      },
+      "queue": {
+        "type": "memory"
+      }
+    }
+  }
+}

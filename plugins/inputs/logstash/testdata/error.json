@@ -1,0 +1,7 @@
+{
+  "path": "/404",
+  "status": 404,
+  "error": {
+    "message": "Not Found"
+  }
+}
