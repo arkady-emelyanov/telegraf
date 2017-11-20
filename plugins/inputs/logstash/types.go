@@ -28,9 +28,10 @@ type (
 		Name        string `json:"name"`
 
 		// possible keys
-		Process  apiProcessResponse  `json:"process"`
-		JVM      apiJVMResponse      `json:"jvm"`
-		Pipeline apiPipelineResponse `json:"pipeline"`
+		Process   apiProcessResponse  `json:"process"`
+		JVM       apiJVMResponse      `json:"jvm"`
+		Pipeline  apiPipelineResponse `json:"pipeline"` // logstash 5.x
+		Pipelines apiPipelineResponse `json:"pipelines"` // logstash 6.x
 	}
 
 	apiProcessResponse struct {

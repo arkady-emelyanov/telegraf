@@ -76,7 +76,7 @@ func (l *logstash) Gather(acc telegraf.Accumulator) error {
 			go publishPipelinesStat(api, res, &workers)
 		})
 
-		endpointChan <- fmt.Sprintf("%s/jvm,process,pipelines,events", c.apiPrefix)
+		endpointChan <- c.apiPrefix
 		close(endpointChan)
 	}
 

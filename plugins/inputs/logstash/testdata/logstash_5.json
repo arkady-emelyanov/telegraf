@@ -6,100 +6,112 @@
   "name": "48b7f6856666",
   "jvm": {
     "threads": {
-      "count": 33,
-      "peak_count": 34
+      "count": 74,
+      "peak_count": 75
     },
     "mem": {
-      "heap_used_percent": 8,
-      "heap_committed_in_bytes": 1038876672,
-      "heap_max_in_bytes": 1038876672,
-      "heap_used_in_bytes": 92925240,
-      "non_heap_used_in_bytes": 93252472,
-      "non_heap_committed_in_bytes": 97665024,
+      "heap_used_percent": 2,
+      "heap_committed_in_bytes": 344211456,
+      "heap_max_in_bytes": 8389328896,
+      "heap_used_in_bytes": 187788096,
+      "non_heap_used_in_bytes": 119345368,
+      "non_heap_committed_in_bytes": 125636608,
       "pools": {
         "survivor": {
-          "peak_used_in_bytes": 34865152,
-          "used_in_bytes": 34865144,
-          "peak_max_in_bytes": 34865152,
-          "max_in_bytes": 34865152,
-          "committed_in_bytes": 34865152
+          "peak_used_in_bytes": 8912896,
+          "used_in_bytes": 1003480,
+          "peak_max_in_bytes": 200605696,
+          "max_in_bytes": 200605696,
+          "committed_in_bytes": 8912896
         },
         "old": {
-          "peak_used_in_bytes": 86875808,
-          "used_in_bytes": 37834624,
-          "peak_max_in_bytes": 724828160,
-          "max_in_bytes": 724828160,
-          "committed_in_bytes": 724828160
+          "peak_used_in_bytes": 164822448,
+          "used_in_bytes": 160435184,
+          "peak_max_in_bytes": 6583418880,
+          "max_in_bytes": 6583418880,
+          "committed_in_bytes": 263667712
         },
         "young": {
-          "peak_used_in_bytes": 279183360,
-          "used_in_bytes": 20225472,
-          "peak_max_in_bytes": 279183360,
-          "max_in_bytes": 279183360,
-          "committed_in_bytes": 279183360
+          "peak_used_in_bytes": 71630848,
+          "used_in_bytes": 26349432,
+          "peak_max_in_bytes": 1605304320,
+          "max_in_bytes": 1605304320,
+          "committed_in_bytes": 71630848
         }
       }
     },
     "gc": {
       "collectors": {
         "old": {
-          "collection_time_in_millis": 165,
-          "collection_count": 2
+          "collection_time_in_millis": 184,
+          "collection_count": 3
         },
         "young": {
-          "collection_time_in_millis": 590,
-          "collection_count": 5
+          "collection_time_in_millis": 816,
+          "collection_count": 41
         }
       }
     },
-    "uptime_in_millis": 28386
+    "uptime_in_millis": 651555
   },
   "process": {
-    "open_file_descriptors": 117,
-    "peak_open_file_descriptors": 117,
-    "max_file_descriptors": 1048576,
+    "open_file_descriptors": 451,
+    "peak_open_file_descriptors": 451,
+    "max_file_descriptors": 262144,
     "mem": {
-      "total_virtual_in_bytes": 4846710784
+      "total_virtual_in_bytes": 18955649024
     },
     "cpu": {
-      "total_in_millis": 34500,
-      "percent": 3,
+      "total_in_millis": 141250,
+      "percent": 0,
       "load_average": {
-        "1m": 1.04,
-        "5m": 0.4,
-        "15m": 0.2
+        "1m": 4.17,
+        "5m": 4.43,
+        "15m": 4.61
       }
     }
   },
   "pipeline": {
     "events": {
-      "duration_in_millis": 0,
-      "in": 0,
-      "out": 0,
-      "filtered": 0,
-      "queue_push_duration_in_millis": 0
+      "duration_in_millis": 474353116,
+      "in": 93361067,
+      "out": 93361067,
+      "filtered": 93361067,
+      "queue_push_duration_in_millis": 1238210
     },
     "plugins": {
       "inputs": [
         {
-          "id": "a35197a509596954e905e38521bae12b1498b17d-1",
+          "id": "70a3b6721fda13a3a91acd0ddf73f8208ff88199-1",
           "events": {
-            "out": 0,
-            "queue_push_duration_in_millis": 0
+            "out": 93361067,
+            "queue_push_duration_in_millis": 1238210
           },
-          "name": "beats"
+          "current_connections": 5,
+          "name": "beats",
+          "peak_connections": 5
         }
       ],
-      "filters": [],
-      "outputs": [
+      "filters": [
         {
-          "id": "a35197a509596954e905e38521bae12b1498b17d-2",
+          "id": "70a3b6721fda13a3a91acd0ddf73f8208ff88199-2",
           "events": {
-            "duration_in_millis": 0,
-            "in": 0,
+            "duration_in_millis": 2266763,
+            "in": 70523522,
             "out": 0
           },
-          "name": "stdout"
+          "name": "drop"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "70a3b6721fda13a3a91acd0ddf73f8208ff88199-3",
+          "events": {
+            "duration_in_millis": 65261593,
+            "in": 22837545,
+            "out": 22837545
+          },
+          "name": "elasticsearch"
         }
       ]
     },
