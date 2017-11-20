@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"time"
 	"sync"
-	"strings"
 )
 
 const configSample = `
@@ -26,7 +25,6 @@ type (
 		Timeout  internal.Duration
 
 		APIPrefix string `toml:"api_prefix"`
-		Types     []string
 
 		// Path to CA file
 		SSLCA string `toml:"ssl_ca"`
@@ -53,7 +51,7 @@ func (l *logstash) SampleConfig() string {
 }
 
 func (l *logstash) Description() string {
-	return "Collect Kafka topics and consumers status from Burrow HTTP API."
+	return "Collect Logstash events via Logstash Node API."
 }
 
 // Gather Burrow stats
@@ -78,12 +76,7 @@ func (l *logstash) Gather(acc telegraf.Accumulator) error {
 			go publishPipelinesStat(api, res, &workers)
 		})
 
-		collectTypes := strings.Join(l.Types, ",")
-		if collectTypes == "" {
-			collectTypes = "jvm,process,pipelines,events"
-		}
-
-		endpointChan <- fmt.Sprintf("%s/%s", c.apiPrefix, collectTypes)
+		endpointChan <- fmt.Sprintf("%s/jvm,process,pipelines,events", c.apiPrefix)
 		close(endpointChan)
 	}
 
@@ -169,7 +162,7 @@ func withAPICall(api apiClient, producer <-chan string, done chan<- bool, resolv
 			break
 		}
 
-		fmt.Println(uri)
+		fmt.Println("request:", uri)
 		res, err := api.call(uri)
 		if err != nil {
 			api.errorChan <- err

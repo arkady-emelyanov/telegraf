@@ -8,5 +8,5 @@ import (
 func publishJVMStat(api apiClient, res apiResponse, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	fmt.Println(res)
+	fmt.Println("jvm:", res)
 }

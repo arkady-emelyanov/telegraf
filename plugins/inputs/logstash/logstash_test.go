@@ -11,11 +11,9 @@ import (
 	"github.com/influxdata/telegraf/testutil"
 )
 
-// remap uri to json file, eg: /v2/kafka -> ./testdata/v2_kafka.json
+// respond with version number
 func getResponseJSON(file string) ([]byte, int) {
 	jsonFile := fmt.Sprintf("./testdata/%s.json", file)
-
-	// TODO: somehow extract requested fields
 
 	code := 200
 	_, err := os.Stat(jsonFile)
@@ -64,7 +62,7 @@ func getHTTPServerBasicAuthVersion(version string) *httptest.Server {
 }
 
 //
-func TestItWorks(t *testing.T) {
+func TestLogstash5(t *testing.T) {
 	s := getHTTPServerVersion("logstash_5")
 	defer s.Close()
 
@@ -75,3 +73,15 @@ func TestItWorks(t *testing.T) {
 	acc := &testutil.Accumulator{}
 	plugin.Gather(acc)
 }
+
+//func TestLogstash6(t *testing.T) {
+//	s := getHTTPServerVersion("logstash_6")
+//	defer s.Close()
+//
+//	plugin := &logstash{
+//		Servers: []string{s.URL},
+//	}
+//
+//	acc := &testutil.Accumulator{}
+//	plugin.Gather(acc)
+//}

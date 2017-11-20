@@ -21,90 +21,159 @@ type (
 
 	apiResponse struct {
 		// general request
-		Host        string
-		Version     string
-		HTTPAddress string
-		ID          string
-		Name        string
+		Host        string `json:"host"`
+		Version     string `json:"version"`
+		HTTPAddress string `json:"http_address"`
+		ID          string `json:"id"`
+		Name        string `json:"name"`
 
 		// possible keys
-		JVM     apiJVMResponse
-		Process apiProcessResponse
+		Process  apiProcessResponse  `json:"process"`
+		JVM      apiJVMResponse      `json:"jvm"`
+		Pipeline apiPipelineResponse `json:"pipeline"`
 	}
 
 	apiProcessResponse struct {
-		//"open_file_descriptors": 116,
-		//"peak_open_file_descriptors": 117,
-		//"max_file_descriptors": 1048576,
-		Mem apiProcessResponseMem
+		OpenFileDescriptors     int `json:"open_file_descriptors"`
+		PeakOpenFileDescriptors int `json:"peak_open_file_descriptors"`
+		MaxFileDescriptors      int `json:"max_file_descriptors"`
+
+		Mem apiProcessResponseMem `json:"mem"`
+		CPU apiProcessResponseCPU `json:"cpu"`
 	}
 
 	apiProcessResponseMem struct {
-		//"total_virtual_in_bytes": 4848947200
+		TotalVirtualInBytes int64 `json:"total_virtual_in_bytes"`
 	}
 
 	apiProcessResponseCPU struct {
-		//"total_in_millis": 48300,
-		//"percent": 1,
+		TotalInMillis int64                            `json:"total_in_millis"`
+		Percent       float32                          `json:"percent"`
+		LoadAverage   apiProcessResponseCPULoadAverage `json:"load_average"`
 	}
 
 	apiProcessResponseCPULoadAverage struct {
-		//"1m": 0.23,
-		//"5m": 0.35,
-		//"15m": 0.27
+		OneMinute      float32 `json:"1m"`  //"1m": 0.23,
+		FiveMinutes    float32 `json:"5m"`  //"5m": 0.35,
+		FifteenMinutes float32 `json:"15m"` //"15m": 0.27
 	}
 
 	apiJVMResponse struct {
-		Threads apiJVMResponseThreads
-		Mem     apiJVMResponseMem
-		GC      apiJVMResponseGC
-		Uptime  int64 `json:"uptime_in_millis"`
+		Uptime int64 `json:"uptime_in_millis"`
+
+		Threads apiJVMResponseThreads `json:"threads"`
+		Mem     apiJVMResponseMem     `json:"mem"`
+		GC      apiJVMResponseGC      `json:"gc"`
 	}
 
 	apiJVMResponseThreads struct {
-		Count     int
-		PeakCount int
+		Count     int `json:"count"`
+		PeakCount int `json:"peak_count"`
 	}
 
 	apiJVMResponseMem struct {
-		//"heap_used_percent": 19,
-		//"heap_committed_in_bytes": 1038876672,
-		//"heap_max_in_bytes": 1038876672,
-		//"heap_used_in_bytes": 207075480,
-		//"non_heap_used_in_bytes": 94490168,
-		//"non_heap_committed_in_bytes": 100573184,
-		Pools apiJVMResponseMemPools
+		HeapUserPercent        float32 `json:"heap_user_percent"`
+		HeapCommittedInBytes   int64   `json:"heap_committed_in_bytes"`
+		HeapMaxInBytes         int64   `json:"heap_max_in_bytes"`
+		HeapUsedInBytes        int64   `json:"heap_used_in_bytes"`
+		NonHeapUsedInBytes     int64   `json:"non_heap_used_in_bytes"`
+		NonHeapCommitedInBytes int64   `json:"non_heap_commited_in_bytes"`
+
+		Pools apiJVMResponseMemPools `json:"pools"`
 	}
 
 	apiJVMResponseMemPools struct {
-		Survivor apiJVMResponseMemPoolItem
-		Old      apiJVMResponseMemPoolItem
-		Young    apiJVMResponseMemPoolItem
+		Survivor apiJVMResponseMemPoolItem `json:"survivor"`
+		Old      apiJVMResponseMemPoolItem `json:"old"`
+		Young    apiJVMResponseMemPoolItem `json:"young"`
 	}
 
 	apiJVMResponseMemPoolItem struct {
-		//"peak_used_in_bytes": 34865152,
-		//"used_in_bytes": 34865144,
-		//"peak_max_in_bytes": 34865152,
-		//"max_in_bytes": 34865152,
-		//"committed_in_bytes": 34865152
+		PeakUsedInBytes  int64 `json:"peak_used_in_bytes"`
+		UsedInBytes      int64 `json:"used_in_bytes"`
+		PeakMaxInBytes   int64 `json:"peak_max_in_bytes"`
+		MaxInBytes       int64 `json:"max_in_bytes"`
+		CommittedInBytes int64 `json:"committed_in_bytes"`
 	}
 
 	apiJVMResponseGC struct {
-		Collectors apiJVMResponseGCCollector
+		Collectors apiJVMResponseGCCollector `json:"collectors"`
 	}
 
 	apiJVMResponseGCCollector struct {
-		Old   apiJVMResponseGCCollectorItem
-		Young apiJVMResponseGCCollectorItem
+		Old   apiJVMResponseGCCollectorItem `json:"old"`
+		Young apiJVMResponseGCCollectorItem `json:"young"`
 	}
 
 	apiJVMResponseGCCollectorItem struct {
-		//"collection_time_in_millis": 182,
-		//"collection_count": 2
+		CollectionTimeInMillis int64 `json:"collection_time_in_millis"`
+		CollectionCount        int   `json:"collection_count"`
+	}
+
+	apiPipelineResponse struct {
+		ID string `json:"id"`
+
+		Events  apiPipelineResponseEvents  `json:"events"`
+		Plugins apiPipelineResponsePlugins `json:"plugins"`
+		Queue   apiPipelineResponseQueue   `json:"queue"`
+	}
+
+	apiPipelineResponseEvents struct {
+		DurationInMillis          int64 `json:"duration_in_millis"`
+		In                        int64 `json:"in"`
+		Out                       int64 `json:"out"`
+		Filtered                  int64 `json:"filtered"`
+		QueuePushDurationInMillis int64 `json:"queue_push_duration_in_millis"`
+	}
+
+	apiPipelineResponsePlugins struct {
+		Inputs  []apiPipelineResponsePluginInput  `json:"inputs"`
+		Filters []apiPipelineResponsePluginFilter `json:"filters"`
+		Outputs []apiPipelineResponsePluginOutput `json:"outputs"`
+	}
+
+	// /pipeline/plugins/input
+	apiPipelineResponsePluginInput struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+
+		Events apiPipelineResponsePluginInputEvents `json:"events"`
+	}
+
+	apiPipelineResponsePluginInputEvents struct {
+		QueuePushDurationInMillis int64 `json:"queue_push_duration_in_millis"`
+		Out                       int64 `json:"out"`
+	}
+
+	// /pipeline/plugins/filter
+	apiPipelineResponsePluginFilter struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+
+		Events apiPipelineResponsePluginFilterEvents `json:"events"`
+	}
+
+	apiPipelineResponsePluginFilterEvents struct {
+	}
+
+	// /pipeline/plugins/output
+	apiPipelineResponsePluginOutput struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+
+		Events apiPipelineResponsePluginOutputEvents `json:"events"`
+	}
+
+	apiPipelineResponsePluginOutputEvents struct {
+		DurationInMillis int64 `json:"duration_in_millis"`
+		In               int64 `json:"in"`
+		Out              int64 `json:"out"`
+	}
+
+	apiPipelineResponseQueue struct {
+		Type string `json:"type"`
 	}
 )
-
 
 // construct endpoint request
 func (api *apiClient) getRequest(uri string) (*http.Request, error) {
