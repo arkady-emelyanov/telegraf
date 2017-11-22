@@ -30,7 +30,7 @@ type (
 		// possible keys
 		Process   apiProcessResponse  `json:"process"`
 		JVM       apiJVMResponse      `json:"jvm"`
-		Pipeline  apiPipelineResponse `json:"pipeline"` // logstash 5.x
+		Pipeline  apiPipelineResponse `json:"pipeline"`  // logstash 5.x
 		Pipelines apiPipelineResponse `json:"pipelines"` // logstash 6.x
 	}
 
@@ -116,7 +116,6 @@ type (
 
 		Events  apiPipelineResponseEvents  `json:"events"`
 		Plugins apiPipelineResponsePlugins `json:"plugins"`
-		Queue   apiPipelineResponseQueue   `json:"queue"`
 	}
 
 	apiPipelineResponseEvents struct {
@@ -128,52 +127,12 @@ type (
 	}
 
 	apiPipelineResponsePlugins struct {
-		Inputs  []apiPipelineResponsePluginInput  `json:"inputs"`
-		Filters []apiPipelineResponsePluginFilter `json:"filters"`
-		Outputs []apiPipelineResponsePluginOutput `json:"outputs"`
+		Inputs  []map[string]interface{} `json:"inputs"`
+		Filters []map[string]interface{} `json:"filters"`
+		Outputs []map[string]interface{} `json:"outputs"`
 	}
 
-	// /pipeline/plugins/input
-	apiPipelineResponsePluginInput struct {
-		ID   string `json:"id"`
-		Name string `json:"name"`
-
-		Events apiPipelineResponsePluginInputEvents `json:"events"`
-	}
-
-	apiPipelineResponsePluginInputEvents struct {
-		QueuePushDurationInMillis int64 `json:"queue_push_duration_in_millis"`
-		Out                       int64 `json:"out"`
-	}
-
-	// /pipeline/plugins/filter
-	apiPipelineResponsePluginFilter struct {
-		ID   string `json:"id"`
-		Name string `json:"name"`
-
-		Events apiPipelineResponsePluginFilterEvents `json:"events"`
-	}
-
-	apiPipelineResponsePluginFilterEvents struct {
-	}
-
-	// /pipeline/plugins/output
-	apiPipelineResponsePluginOutput struct {
-		ID   string `json:"id"`
-		Name string `json:"name"`
-
-		Events apiPipelineResponsePluginOutputEvents `json:"events"`
-	}
-
-	apiPipelineResponsePluginOutputEvents struct {
-		DurationInMillis int64 `json:"duration_in_millis"`
-		In               int64 `json:"in"`
-		Out              int64 `json:"out"`
-	}
-
-	apiPipelineResponseQueue struct {
-		Type string `json:"type"`
-	}
+	//apiPipelineResponsePluginItem {}
 )
 
 // construct endpoint request

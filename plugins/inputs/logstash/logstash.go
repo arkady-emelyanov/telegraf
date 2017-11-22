@@ -1,18 +1,22 @@
 package logstash
 
 import (
-	"github.com/influxdata/telegraf/internal"
-	"github.com/influxdata/telegraf/plugins/inputs"
-	"github.com/influxdata/telegraf"
 	"fmt"
 	"net/url"
 	"net/http"
 	"time"
 	"sync"
+
+	"github.com/influxdata/telegraf/internal"
+	"github.com/influxdata/telegraf/plugins/inputs"
+	"github.com/influxdata/telegraf"
+	"reflect"
 )
 
+const defaultAPIPrefix = "/_/node/stats"
 const configSample = `
  ## Hello
+ #gather_types = [ "jvm", "process", "events", "pipeline" ]
 `
 
 type (
@@ -128,7 +132,7 @@ func (l *logstash) getClient(acc telegraf.Accumulator, addr string, errorChan ch
 
 	// api prefix
 	if l.APIPrefix == "" {
-		l.APIPrefix = "/_/node/stats"
+		l.APIPrefix = defaultAPIPrefix
 	}
 
 	if l.Timeout.Duration < time.Second {

@@ -1,7 +1,6 @@
 package logstash
 
 import (
-	"fmt"
 	"sync"
 	"strings"
 )
@@ -15,5 +14,5 @@ func publishEventsStat(api apiClient, res apiResponse, wg *sync.WaitGroup) {
 	}
 
 	// publish events
-	fmt.Println("events:", res)
+	//fmt.Println("events:", res)
 }
